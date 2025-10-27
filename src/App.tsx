@@ -3,13 +3,24 @@ import Form from "./components/form";
 import MemoryCard, { type EmojiItemInterface } from "./components/memoryCard";
 import AssistiveTechInfo from "./components/assistiveTechInfo";
 import GameOver from "./components/gameOver";
+import ErrorCard from "./components/errorCard";
 
 export interface CardData {
   name: string;
   index: number;
 }
+interface FormDataType {
+  category: string;
+  number: number;
+}
 
 export default function App() {
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const initialFormData = {
+    category: "animals-and-nature",
+    number: 10,
+  };
+  const [formData, setFormData] = useState<FormDataType>(initialFormData);
   const [isGameOn, setIsGameOn] = useState(false);
   const [emojisData, setEmojisData] = useState<
     EmojiItemInterface[] | undefined
@@ -17,6 +28,7 @@ export default function App() {
   const [selectedCards, setSelectedCards] = useState<CardData[] | []>([]);
   const [matchedCards, setMatchedCards] = useState<CardData[]>([]);
   const [areAllCardsMatched, setAreAllCardsMatched] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   console.log(areAllCardsMatched, selectedCards);
 
@@ -43,7 +55,7 @@ export default function App() {
 
     try {
       const response = await fetch(
-        "https://emojihub.yurace.pro/api/all/category/animals-and-nature"
+        `https://emojihub.yurace.pro/api/all/category/${formData.category}`
       );
       if (!response.ok) {
         throw new Error("Could not fetch data from API");
@@ -54,7 +66,10 @@ export default function App() {
       setEmojisData(emojisArray);
       setIsGameOn(true);
     } catch (err) {
+      setIsError(true);
       console.error(err);
+    } finally {
+      setIsFirstRender(false);
     }
   }
 
@@ -65,7 +80,7 @@ export default function App() {
   }
   function getRandomIndices(data: EmojiItemInterface[]) {
     const randomIndicesArray: number[] = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < formData.number / 2; i++) {
       const randomIndex = Math.floor(Math.random() * data.length);
       if (!randomIndicesArray.includes(randomIndex)) {
         randomIndicesArray.push(randomIndex);
@@ -97,20 +112,34 @@ export default function App() {
     } else if (selectedCards.length === 2) {
       setSelectedCards([{ name, index }]);
     }
-    console.log("selected");
   }
 
   function resetGame() {
-    setIsGameOn(true)
-    setSelectedCards([])
-    setMatchedCards([])
-    setAreAllCardsMatched(false)
+    setIsGameOn(false);
+    setSelectedCards([]);
+    setMatchedCards([]);
+    setAreAllCardsMatched(false);
+  }
+
+  function resetError() {
+    setIsError(false);
+  }
+
+  function handleFormChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    console.log(e.target.value, e.target.name);
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   return (
     <main>
       <h1>Memory</h1>
-      {!isGameOn && <Form handleSubmit={startGame} />}
+      {!isGameOn && !isError && (
+        <Form
+          handleSubmit={startGame}
+          handleChange={handleFormChange}
+          isFirstRender={isFirstRender}
+        />
+      )}
       {isGameOn && !areAllCardsMatched && (
         <AssistiveTechInfo
           emojisData={emojisData}
@@ -126,6 +155,7 @@ export default function App() {
           matchedCards={matchedCards}
         />
       )}
+      {isError && <ErrorCard handleClick={resetError} />}
     </main>
   );
 }
