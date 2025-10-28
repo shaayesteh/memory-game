@@ -1,69 +1,128 @@
-# React + TypeScript + Vite
+# Memory Game 🎮
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun and interactive card-flipping memory game built with React!
+Based on the course [Build a Memory Game in React](https://scrimba.com/memory-game-in-react-c0a3odsk39) from Scrimba.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+- [Project Description](#project-description)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the App](#running-the-app)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- [How to Play](#how-to-play)
+- [Project Structure](#project-structure)
+- [Future Enhancements](#future-enhancements)
+- [Contributing](#contributing)
+- [License](#license)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Description
+
+This project is a classic memory game where players flip pairs of cards and try to match them. When two cards with the same image are flipped, they stay face up; otherwise they flip back down. The goal is to match all the cards in as few moves as possible.
+
+---
+
+## Features
+
+- Flip cards to reveal images
+- Match pairs of cards
+- Responsive layout for desktop and mobile
+- Smooth animations for card flipping
+- Restart game functionality
+
+---
+
+## Tech Stack
+
+- **React** — for building the user interface
+- **JavaScript (ES6+)** — core language
+- **CSS / SCSS** — styling and animations
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (v14 or newer)
+- npm or yarn
+
+### Installation
+
+```bash
+git clone <repository-url>
+cd memory-game
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Running the App
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm start
 ```
+
+This will start the development server. Open `http://localhost:3000` in your browser to view the game.
+
+---
+
+## How to Play
+
+1. Click a card to flip it and reveal the image.
+2. Click a second card to flip it.
+
+   - If the two flipped cards match, they remain open.
+   - If they don’t match, they flip back down after a short delay.
+
+3. Continue until all pairs are matched.
+4. Your score is based on the number of moves you take — try to beat your best!
+
+---
+
+## Project Structure
+
+```
+/src
+  /components     # Reusable components (Card, Board, Scoreboard, etc.)
+  /assets         # Image assets for the cards
+  /styles         # CSS or SCSS files
+  App.tsx         # Main application component
+  index.ts        # Entry point
+```
+
+---
+
+## Future Enhancements
+
+- Add difficulty levels (e.g., 4×4, 6×6 grid)
+- Add timer and best time tracking
+- Add themes or card sets (animals, sports, icons)
+- Add sound effects on match or mismatch
+- Add multiplayer or turn-based mode
+
+---
+
+## Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create a branch (`git checkout -b feature/my-feature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/my-feature`)
+5. Open a Pull Request
+
+Please ensure your code follows consistent style & includes meaningful comments.
+
+---
+
+Let’s have fun and boost your memory 💡🎉
