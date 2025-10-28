@@ -3,6 +3,8 @@
 A fun and interactive card-flipping memory game built with React!
 Based on the course [Build a Memory Game in React](https://scrimba.com/memory-game-in-react-c0a3odsk39) from Scrimba.
 
+🎮 Live Demo: memory-game-sand-tau.vercel.app
+
 ---
 
 ## Table of Contents
